@@ -1,0 +1,3 @@
+2023-08-23 03:31:08,012 [INFO] getting airports in each country
+2023-08-23 03:32:45,760 [INFO] getting connections for each airport
+2023-08-23 05:28:03,461 [INFO] collating data into csvs
