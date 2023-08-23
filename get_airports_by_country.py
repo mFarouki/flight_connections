@@ -1,4 +1,4 @@
-from constants import airports_by_country_url, flight_data_website
+from constants import AIRPORTS_BY_COUNTRY_URL, FLIGHT_DATA_WEBSITE
 from utils import get_beautiful_soup
 
 KEY_PHRASE_ALL_COUNTRIES = 'Airports in '
@@ -7,7 +7,7 @@ CITY_NAME = 'city name'
 
 
 def get_country_links() -> dict:
-    airports_by_country_soup = get_beautiful_soup(airports_by_country_url)
+    airports_by_country_soup = get_beautiful_soup(AIRPORTS_BY_COUNTRY_URL)
     links = airports_by_country_soup.select('a')
     country_links = {}
     for link in links:
@@ -20,22 +20,18 @@ def get_country_links() -> dict:
 
 def get_airport_codes_by_country(country_links: dict):
     airport_codes = {}
-    test_country_counter = 0
     for country, link in country_links.items():
-        country_page_soup = get_beautiful_soup(f'{flight_data_website}{link}')
+        country_page_soup = get_beautiful_soup(f'{FLIGHT_DATA_WEBSITE}{link}')
         paragraphs = country_page_soup.select('p')
         for paragraph in paragraphs:
             paragraph_class = paragraph.get('class')
             if paragraph_class == KEY_PARAGRAPH_CLASS:
                 paragraph_text = paragraph.get_text().split(' ')
-                city, code = paragraph_text[0], paragraph_text[1]
+                city, code = paragraph_text[0], paragraph_text[1].lower()
                 if country not in airport_codes:
                     airport_codes[country] = {}
                 airport_codes[country][code] = {}
                 airport_codes[country][code][CITY_NAME] = city
-        test_country_counter += 1
-        if test_country_counter > 5:
-            break
     return airport_codes
 
 
