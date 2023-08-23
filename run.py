@@ -1,15 +1,13 @@
+import logging
+
 from extract_csv import build_df, write_csv
 from get_airports_by_country import get_airports_by_country
 from get_connections import get_connections
-import logging
 
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s [%(levelname)s] %(message)s",
-    handlers=[
-        logging.FileHandler("run.log"),
-        logging.StreamHandler()
-    ]
+    handlers=[logging.FileHandler("run.log"), logging.StreamHandler()],
 )
 
 
